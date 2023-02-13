@@ -109,7 +109,7 @@ class Polynomial:
     def __str__(self):
 
         st = ''
-        
+
         for i, c in enumerate(self.coefficients):
 
             c = round(c, 2)
@@ -128,7 +128,7 @@ class Polynomial:
                     st += ' - ' + f'{c}x^{i}'[1:]
                 else:
                     st += ' + ' + f'{c}x^{i}'
-                
+
         return st
 
 if __name__ == "__main__":
