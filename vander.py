@@ -7,11 +7,11 @@ class ComputationError:
         print("There was an error in solving the linear system.")
 
 
-class Vandermode:
+class Vandermonde:
 
     def __init__(self, x: list):
         '''
-        Given a list of n real numbers, creates a Vandermode matrix (n x n)
+        Given a list of n real numbers, creates a Vandermonde matrix (n x n)
         representation of n n-1th degree polynomials.
         '''
 
@@ -135,7 +135,7 @@ if __name__ == "__main__":
     X = [-3, -2, -1, 0, 1, 2, 3]
     f = [2, 3, -1, -2, -4, -1 ,0]
 
-    V = Vandermode(X)
+    V = Vandermonde(X)
     print(V)
 
     A, c = V.solve(f)
