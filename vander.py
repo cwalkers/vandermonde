@@ -8,20 +8,19 @@ class ComputationError:
 
 class Vandermode:
     '''
-    Given X, a set of n real numbers, creates a Vandermode matrix
-    representation of n n-1 degree polynomials. 
+    Given a list of n real numbers, creates a Vandermode matrix (n x n)
+    representation of n n-1th degree polynomials.
     '''
 
-    def __init__(self, X):
-        
-        #TODO: add assertions
+    def __init__(self, x: list):
 
-        n = len(X)
+        assert sorted(x) == sorted(list(set(x))), "x's must be unique"
+
         v = []
         p = [1]
 
-        for k in X:
-            for i in range(1, n):
+        for k in x:
+            for i in range(1, len(x)):
                 p.append(k**i)
 
             v.extend([p])
@@ -33,12 +32,24 @@ class Vandermode:
         
         return str(self.matrix)
 
-    def solve(self, f):
-        '''
-        TODO: add docstring
+    def solve(self, f: list) -> tuple:
+        '''       
+        Given a Vandermode Object, and a list of values for f(x),
+        solves the linear system to produce the coefficients of the
+        interpolant polynomial.
+        
+        Paramaters:
+            self: Vandermode Object: the Vandermode matrix
+            f: lst: the values of the polynomial we seek to interpolate
+        
+        Returns: tuple (A, x):
+            A: the Vandermode Matrix after Gaussian Elimination
+            x: the coefficients of the interpolant
         '''
         A = self.matrix
         n = len(f)
+        
+        assert len(A) == n, 'Dimensions must match'
 
         for i in range(n - 1):
             
@@ -88,7 +99,7 @@ class Vandermode:
 if __name__ == "__main__":
     X = [-3, -2, -1, 0, 1, 2, 3]
     f = [2, 3, -1, -2, -4, -1 ,0]
-        
+
     V = Vandermode(X)
     
     print(V)
