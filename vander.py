@@ -8,12 +8,12 @@ class ComputationError:
 
 
 class Vandermode:
-    '''
-    Given a list of n real numbers, creates a Vandermode matrix (n x n)
-    representation of n n-1th degree polynomials.
-    '''
 
     def __init__(self, x: list):
+        '''
+        Given a list of n real numbers, creates a Vandermode matrix (n x n)
+        representation of n n-1th degree polynomials.
+        '''
 
         assert sorted(x) == sorted(list(set(x))), "x's must be unique"
 
@@ -112,7 +112,7 @@ class Polynomial:
 
         for i, c in enumerate(self.coefficients):
 
-            c = round(c, 2)
+            c = round(c, 4)
             
             if i == 0:
                 st += str(c)
@@ -144,7 +144,7 @@ if __name__ == "__main__":
     print(c)
 
     poly = Polynomial(c)
-    print(poly)
+    print(f"Interpolant: {poly}")
     
     xs = np.arange(-3, 3, 0.01)
     
