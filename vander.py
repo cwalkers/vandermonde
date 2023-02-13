@@ -1,4 +1,5 @@
 import numpy as np
+import matplotlib.pyplot as plt
 
 class ComputationError:
     
@@ -78,33 +79,78 @@ class Vandermode:
                 f[j] -= ratio*f[i]
 
         #back subsitution
-        x = np.zeros(n)
-        x[n - 1] = f[n - 1] / A[n - 1, n - 1]
+        c = np.zeros(n)
+        c[n - 1] = f[n - 1] / A[n - 1, n - 1]
 
         for i in range(n - 2, -1, -1): 
             y = f[i]
             for j in range(i + 1, n):
-                y -= A[i, j]*x[j]
+                y -= A[i, j]*c[j]
 
-            x[i] = y/A[i, i]
+            c[i] = y/A[i, i]
 
         #check the computation
-        if np.isclose([np.dot(A, x)], [f], atol=1e-10).all(): 
+        if np.isclose([np.dot(A, c)], [f], atol=1e-10).all(): 
             print("Interpolated")
         else:
             raise ComputationError
+
+        return (A, c)
+
+
+class Polynomial: 
+    
+    def __init__(self, coefficients): 
+        '''
+        '''
+        self.coefficients = coefficients
+        self.f = lambda x: sum(c*x**i for i, c in enumerate(coefficients))
         
-        return (A, x)
+    def __str__(self):
+
+        st = ''
+        
+        for i, c in enumerate(self.coefficients):
+
+            c = round(c, 2)
+            
+            if i == 0:
+                st += str(c)
+
+            elif i == 1:
+                if c < 0: 
+                    st += ' - ' + str(c)[1:] + 'x'
+                else:
+                    st += ' + ' + str(c) + 'x'
+
+            else:
+                if c < 0:
+                    st += ' - ' + f'{c}x^{i}'[1:]
+                else:
+                    st += ' + ' + f'{c}x^{i}'
+                
+        return st
 
 if __name__ == "__main__":
     X = [-3, -2, -1, 0, 1, 2, 3]
-    f = [2, 3, -1, -2, -4, -1 ,0]
+    f = [2, 3, -1, -2, -4, -1 ,3]
 
     V = Vandermode(X)
-    
+
     print(V)
 
     c = V.solve(f)
 
     print(c[0])
     print(c[1])
+
+    poly = Polynomial(c[1])
+    print(poly)
+    
+    xs = np.arange(-3, 3, 0.01)
+
+    plt.plot(xs, poly.f(xs))
+    plt.scatter([-3, -2, -1, 0, 1, 2, 3], [2, 3, -1, -2, -4, -1 ,0])
+    plt.ylabel("f(x)")
+    plt.xlabel("x")
+    plt.show()
