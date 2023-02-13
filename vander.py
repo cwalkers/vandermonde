@@ -133,22 +133,21 @@ class Polynomial:
 
 if __name__ == "__main__":
     X = [-3, -2, -1, 0, 1, 2, 3]
-    f = [2, 3, -1, -2, -4, -1 ,3]
+    f = [2, 3, -1, -2, -4, -1 ,0]
 
     V = Vandermode(X)
-
     print(V)
 
-    c = V.solve(f)
+    A, c = V.solve(f)
 
-    print(c[0])
-    print(c[1])
+    print(A)
+    print(c)
 
-    poly = Polynomial(c[1])
+    poly = Polynomial(c)
     print(poly)
     
     xs = np.arange(-3, 3, 0.01)
-
+    
     plt.plot(xs, poly.f(xs))
     plt.scatter([-3, -2, -1, 0, 1, 2, 3], [2, 3, -1, -2, -4, -1 ,0])
     plt.ylabel("f(x)")
