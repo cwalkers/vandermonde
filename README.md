@@ -1,1 +1,1 @@
-Visualizing Polynomial Interpolation via the Vandermode Matrix
+Visualizing Polynomial Interpolation via the Vandermonde Matrix
